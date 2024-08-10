@@ -11,6 +11,68 @@
     <script src="app.js" defer></script>
 </head>
 <body>
-    
+    <main>
+    <section>
+        <h1>Receiptbook 📝</h1>
+    </section>
+    <article>
+        <h4>Add recipe</h4>
+        <form onsubmit="return false">
+          <fieldset class="grid">
+            <input
+                name="title"
+                placeholder="Title"
+                aria-label="Title"
+                autocomplete="off"
+                autofocus
+                required
+            />
+            <input
+                type="text"
+                name="ingredients"
+                placeholder="Ingredients"
+                aria-label="Ingredients"
+                autocomplete="off"
+                required
+            />
+            <input
+                type="text"
+                name="description"
+                placeholder="Description"
+                aria-label="Description"
+                autocomplete="off"
+                required
+            />
+            <input
+                type="text"
+                name="time"
+                placeholder="Time"
+                aria-label="Time"
+                autocomplete="off"
+                required
+            />
+            <button type="submit">Save</button>
+          </fieldset>
+        </form>
+      </article>
+      <article>
+        <h2>Recipes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Ingredients</th>
+              <th scope="col">Description</th>
+              <th scope="col">Time</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="listValues">
+            <tr>
+              <td colspan="5">No data available</td>
+            </tr>
+        </table>
+      </article>
+    </main>
 </body>
 </html>
