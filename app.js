@@ -35,10 +35,12 @@ async function getRecipe(id) {
 function teste() {}
 
 async function deleteRecipe(id) {
-    const db = await getRecipeDatabase();
-    db.recipes.delete(recipe).then(() => {
-        listValues();
-    });
+    if (confirm('Are you sure you want to delete this recipe?')) {
+        const db = await getRecipeDatabase();
+        db.recipes.delete(recipe).then(() => {
+            listValues();
+        });
+    }
 }
 
 function editRecipe(id) {
