@@ -5,7 +5,7 @@ export default async function getRecipeDatabase() {
     const db = new Dexie('recipeDatabase');
 
     db.version(2).stores({
-      recipes: '++id,title,ingredients,description,time',
+      recipes: '&title,ingredients,description,time',
     });
 
     return db;

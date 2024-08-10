@@ -1,4 +1,5 @@
 import getRecipeDatabase from './helpers/database.js';
+import registerServiceWorker from './helpers/install-sw.js';
 
 listRecipes();
 
@@ -12,9 +13,11 @@ async function addRecipe(title, ingredients, description, time) {
     const recipe = { title, ingredients, description, time };
     const db = await getRecipeDatabase();
     db.recipes.put(recipe).then(() => {
+        console.log("recipe added")
         listRecipes();
         form.reset();
         form.title.focus();
+        form.title.disabled = false;
     });
 }
 
@@ -25,27 +28,30 @@ async function getRecipes() {
     return recipes;
 }
 
-async function getRecipe(id) {
+async function getRecipe(title) {
     const db = await getRecipeDatabase();
-    let recipe = await db.recipes.get(id);
+    let recipe = await db.recipes.get(title);
 
     return recipe;
 }
 
 function teste() {}
 
-async function deleteRecipe(id) {
+export async function deleteRecipe(recipeTitle) {
     if (confirm('Are you sure you want to delete this recipe?')) {
+        const recipe = await getRecipe(recipeTitle);
         const db = await getRecipeDatabase();
-        db.recipes.delete(recipe).then(() => {
-            listValues();
+        db.recipes.where("title").equals(recipe.title).delete().then(() => {
+            console.log("delete")
+            listRecipes();
         });
     }
 }
 
-function editRecipe(id) {
+export async function editRecipe(recipeTitle) {
     const form = document.querySelector('form');
-    const recipe = getRecipe(id);
+    const recipe = await getRecipe(recipeTitle);
+    form.title.disabled = true;
     form.title.value = recipe.title;
     form.ingredients.value = recipe.ingredients;
     form.description.value = recipe.description;
@@ -73,10 +79,10 @@ function toHTML(recipe) {
          <td>${recipe.description}</td>
           <td>${recipe.time}</td>
         <td style="width: 30px">
-          <span style="cursor: pointer" onclick="editRecipe(${recipe.id})">✏️</span>
+          <span style="cursor: pointer" onclick="editRecipe('${recipe.title}')">✏️</span>
         </td>
         <td style="width: 30px">
-          <span style="cursor: pointer" onclick="deleteRecipe('${recipe.id}')">🗑️</span>
+          <span style="cursor: pointer" onclick="deleteRecipe('${recipe.title}')">🗑️</span>
         </td>
       </tr>
     `;
@@ -93,3 +99,5 @@ function resetTable() {
     const listValues = document.getElementById('listValues');
     listValues.innerHTML = '<td colSpan="4">No data available</td>';
 }
+
+registerServiceWorker();
