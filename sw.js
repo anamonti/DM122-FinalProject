@@ -15,7 +15,7 @@ self.addEventListener('fetch', async (event) => {
   event.respondWith(cacheFirst(event.request));
 });
 
-const CACHE_VERSION_KEY = 'sw-cache-v7';
+const CACHE_VERSION_KEY = 'sw-cache-v8';
 
 async function installStaticAssets() {
   return caches
@@ -24,9 +24,18 @@ async function installStaticAssets() {
       cache.addAll([
         'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.min.css',
         'https://cdn.jsdelivr.net/npm/dexie@4.0.8/+esm',
+        '/images/receiptbook.jpg',
+        '/images/receiptbook_16x16.png',
+        '/images/receiptbook_32x32.png',
+        '/images/receiptbook_48x48.png',
+        '/images/receiptbook_72x72.png',
+        '/images/receiptbook_96x96.png',
+        '/images/receiptbook_144x144.png',
+        '/images/receiptbook_192x192.png',
         './',
         './index.html',
         './helpers/database.js',
+        './helpers/install-sw.js',
         './app.js',
       ])
     );
